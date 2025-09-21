@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Rotation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f4f8;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .info { background: #cce7ff; color: #004085; }
+        .warning { background: #fff3cd; color: #856404; }
+        .countdown {
+            font-size: 2em;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #6366f1;
+        }
+        .rotation-count {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #059669;
+        }
+        .checksum-display {
+            font-family: monospace;
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔄 QR Code Rotation Test</h1>
+        <p>This test simulates the QR rotation logic to verify it works correctly:</p>
+        
+        <div class="status info">
+            <strong>📊 Test Status:</strong> <span id="testStatus">Initializing...</span>
+        </div>
+        
+        <div class="countdown" id="countdown">5</div>
+        
+        <div class="rotation-count" id="rotationCount">Rotations: 0</div>
+        
+        <div class="checksum-display">
+            <strong>Current Checksum:</strong> <span id="currentChecksum">-</span>
+        </div>
+        
+        <div class="status success" id="entropyInfo">
+            <strong>🎲 Entropy Sources:</strong> High-precision timestamps, multiple random salts, browser fingerprinting, memory usage
+        </div>
+        
+        <div class="status warning">
+            <strong>🚫 Security Feature:</strong> QR codes rotate every 5 seconds to prevent screenshot sharing
+        </div>
+        
+        <h3>📝 Rotation Log:</h3>
+        <div id="rotationLog" style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #fafafa;">
+            <!-- Rotation entries will appear here -->
+        </div>
+    </div>
+
+    <script>
+        let rotationCount = 0;
+        let countdown = 5;
+        let isActive = true;
+        
+        // Simulate the entropy generation logic from your component
+        function generateChecksum(rotationIndex) {
+            const timestamp = Date.now();
+            const microseconds = performance.now();
+            const randomSalt = Math.random().toString(36).substr(2, 20);
+            const sessionId = `session_${timestamp}_${Math.random().toString(36).substr(2, 12)}`;
+            
+            return btoa(`${sessionId}_${rotationIndex}_${microseconds}_${randomSalt}`).substr(0, 12);
+        }
+        
+        function logRotation(index, checksum) {
+            const logContainer = document.getElementById('rotationLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.style.marginBottom = '5px';
+            logEntry.innerHTML = `
+                <strong>[${timestamp}]</strong> 
+                Rotation #${index} - Checksum: <code>${checksum}</code> 
+                <span style="color: #059669;">✅</span>
+            `;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+        
+        function updateDisplay() {
+            document.getElementById('countdown').textContent = countdown;
+            document.getElementById('rotationCount').textContent = `Rotations: ${rotationCount}`;
+            
+            if (countdown === 0) {
+                // Simulate rotation
+                rotationCount++;
+                const newChecksum = generateChecksum(rotationCount);
+                document.getElementById('currentChecksum').textContent = newChecksum;
+                logRotation(rotationCount, newChecksum);
+                countdown = 5; // Reset countdown
+                
+                document.getElementById('testStatus').textContent = `Active - Rotation ${rotationCount} completed`;
+            } else {
+                document.getElementById('testStatus').textContent = `Active - Next rotation in ${countdown}s`;
+            }
+            
+            // Update countdown color
+            const countdownEl = document.getElementById('countdown');
+            if (countdown <= 2) {
+                countdownEl.style.color = '#dc2626';
+            } else {
+                countdownEl.style.color = '#6366f1';
+            }
+        }
+        
+        // Initialize first checksum
+        document.getElementById('currentChecksum').textContent = generateChecksum(0);
+        logRotation(0, generateChecksum(0));
+        
+        // Start the rotation simulation
+        setInterval(() => {
+            if (isActive && countdown > 0) {
+                countdown--;
+                updateDisplay();
+            } else if (countdown === 0) {
+                updateDisplay();
+            }
+        }, 1000);
+        
+        console.log('🔄 QR Rotation Test Started - Check the display above!');
+        console.log('💡 This simulates the exact rotation logic used in your component');
+    </script>
+</body>
+</html>

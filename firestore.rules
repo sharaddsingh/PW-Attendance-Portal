@@ -1,0 +1,49 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow authenticated users to read/write their own user documents
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Allow authenticated users to read/write their own profile documents
+    match /profiles/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Allow all authenticated users to read academic data
+    match /schools/{document=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null; // Temporarily allow write for development
+    }
+    
+    match /batches/{document=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null; // Temporarily allow write for development
+    }
+    
+    match /subjects/{document=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null; // Temporarily allow write for development
+    }
+    
+    // Allow faculty to create and manage attendance sessions
+    match /attendance_sessions/{sessionId} {
+      allow read, write: if request.auth != null;
+      // More specific rule: allow if user is faculty and owns the session
+      // allow read, write: if request.auth != null && request.auth.uid == resource.data.facultyId;
+    }
+    
+    // Allow students and faculty to read/write attendance records
+    match /attendance/{attendanceId} {
+      allow read, write: if request.auth != null;
+      // More specific rules can be added later
+    }
+    
+    // Temporary: Allow all authenticated users to read/write everything (DEVELOPMENT ONLY)
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
