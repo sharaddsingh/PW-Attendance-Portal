@@ -1,0 +1,22 @@
+{
+  "recommendations": [
+    "toba.vsfire",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "dsznajder.es7-react-js-snippets",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag",
+    "burkeholland.simple-react-snippets",
+    "christian-kohler.path-intellisense",
+    "eamodio.gitlens",
+    "usernamehw.errorlens",
+    "yoavbls.pretty-ts-errors",
+    "dotenv.dotenv-vscode",
+    "mikestead.dotenv",
+    "ms-vscode.vscode-typescript-next",
+    "naumovs.color-highlight",
+    "oderwat.indent-rainbow",
+    "PKief.material-icon-theme"
+  ]
+}
