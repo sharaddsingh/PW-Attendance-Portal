@@ -6,48 +6,49 @@ import Input from '../common/Input';
 import { useAuth } from '../../contexts/AuthContext';
 import { createProfileDocument } from '../../services/firebase';
 
-// Core subjects for Technology department
-const TECH_SUBJECTS = [
-  { id: 'java', name: 'JAVA', icon: '☕' },
-  { id: 'python', name: 'PYTHON', icon: '🐍' },
-  { id: 'javascript', name: 'JAVASCRIPT', icon: '🌐' },
-  { id: 'sql', name: 'SQL', icon: '🗃️' },
-  { id: 'dbms', name: 'DBMS (Database Management)', icon: '💾' },
-  { id: 'dsa', name: 'DSA (Data Structures)', icon: '🌳' },
-  { id: 'react', name: 'React.js', icon: '⚛️' },
-  { id: 'nodejs', name: 'Node.js', icon: '🟢' },
-  { id: 'cpp', name: 'C++', icon: '⚙️' },
-  { id: 'c', name: 'C Programming', icon: '📝' },
-  { id: 'html-css', name: 'HTML/CSS', icon: '🎨' },
-  { id: 'machine-learning', name: 'Machine Learning', icon: '🤖' },
-  { id: 'data-science', name: 'Data Science', icon: '📊' },
-  { id: 'cloud-computing', name: 'Cloud Computing', icon: '☁️' },
-  { id: 'cybersecurity', name: 'Cybersecurity', icon: '🔐' },
-  { id: 'mobile-dev', name: 'Mobile Development', icon: '📱' },
-  { id: 'devops', name: 'DevOps', icon: '🔄' },
-  { id: 'blockchain', name: 'Blockchain', icon: '🔗' }
+// This section is removed as we now have ALL_SUBJECTS
+
+// Department options
+const DEPARTMENTS = [
+  'School of Technology',
+  'School of Management'
 ];
 
-// Core subjects for Management department
-const MANAGEMENT_SUBJECTS = [
-  { id: 'business-comm', name: 'Business Communication', icon: '💼' },
-  { id: 'critical-comm', name: 'Critical Communication', icon: '🗣️' },
-  { id: 'excel', name: 'Advanced Excel', icon: '📈' },
-  { id: 'marketing', name: 'Marketing Management', icon: '📢' },
-  { id: 'finance', name: 'Financial Management', icon: '💰' },
-  { id: 'hr', name: 'Human Resource Management', icon: '👥' },
-  { id: 'operations', name: 'Operations Management', icon: '⚙️' },
-  { id: 'strategic', name: 'Strategic Management', icon: '🎯' },
-  { id: 'analytics', name: 'Business Analytics', icon: '📊' },
-  { id: 'digital-marketing', name: 'Digital Marketing', icon: '🌐' },
-  { id: 'entrepreneurship', name: 'Entrepreneurship', icon: '🚀' },
-  { id: 'project-mgmt', name: 'Project Management', icon: '📋' }
+// All subjects combined
+const ALL_SUBJECTS = [
+  // Technology subjects
+  { id: 'java', name: 'JAVA', icon: '☕', department: 'School of Technology' },
+  { id: 'python', name: 'PYTHON', icon: '🐍', department: 'School of Technology' },
+  { id: 'javascript', name: 'JAVASCRIPT', icon: '🌐', department: 'School of Technology' },
+  { id: 'sql', name: 'SQL', icon: '🗃️', department: 'School of Technology' },
+  { id: 'dbms', name: 'DBMS (Database Management)', icon: '💾', department: 'School of Technology' },
+  { id: 'dsa', name: 'DSA (Data Structures)', icon: '🌳', department: 'School of Technology' },
+  { id: 'react', name: 'React.js', icon: '⚛️', department: 'School of Technology' },
+  { id: 'nodejs', name: 'Node.js', icon: '🟢', department: 'School of Technology' },
+  { id: 'cpp', name: 'C++', icon: '⚙️', department: 'School of Technology' },
+  { id: 'c', name: 'C Programming', icon: '📝', department: 'School of Technology' },
+  { id: 'html-css', name: 'HTML/CSS', icon: '🎨', department: 'School of Technology' },
+  { id: 'machine-learning', name: 'Machine Learning', icon: '🤖', department: 'School of Technology' },
+  { id: 'data-science', name: 'Data Science', icon: '📊', department: 'School of Technology' },
+  { id: 'cloud-computing', name: 'Cloud Computing', icon: '☁️', department: 'School of Technology' },
+  { id: 'cybersecurity', name: 'Cybersecurity', icon: '🔐', department: 'School of Technology' },
+  { id: 'mobile-dev', name: 'Mobile Development', icon: '📱', department: 'School of Technology' },
+  { id: 'devops', name: 'DevOps', icon: '🔄', department: 'School of Technology' },
+  { id: 'blockchain', name: 'Blockchain', icon: '🔗', department: 'School of Technology' },
+  // Management subjects
+  { id: 'business-comm', name: 'Business Communication', icon: '💼', department: 'School of Management' },
+  { id: 'critical-comm', name: 'Critical Communication', icon: '🗣️', department: 'School of Management' },
+  { id: 'excel', name: 'Advanced Excel', icon: '📈', department: 'School of Management' },
+  { id: 'marketing', name: 'Marketing Management', icon: '📢', department: 'School of Management' },
+  { id: 'finance', name: 'Financial Management', icon: '💰', department: 'School of Management' },
+  { id: 'hr', name: 'Human Resource Management', icon: '👥', department: 'School of Management' },
+  { id: 'operations', name: 'Operations Management', icon: '⚙️', department: 'School of Management' },
+  { id: 'strategic', name: 'Strategic Management', icon: '🎯', department: 'School of Management' },
+  { id: 'analytics', name: 'Business Analytics', icon: '📊', department: 'School of Management' },
+  { id: 'digital-marketing', name: 'Digital Marketing', icon: '🌐', department: 'School of Management' },
+  { id: 'entrepreneurship', name: 'Entrepreneurship', icon: '🚀', department: 'School of Management' },
+  { id: 'project-mgmt', name: 'Project Management', icon: '📋', department: 'School of Management' }
 ];
-
-const SUBJECTS_BY_DEPARTMENT = {
-  'School of Technology': TECH_SUBJECTS,
-  'School of Management': MANAGEMENT_SUBJECTS
-};
 
 // Designation options
 const DESIGNATIONS = [
@@ -74,7 +75,7 @@ const FacultyProfileForm = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     employeeId: '',
-    departments: [],
+    department: '',
     designation: '',
     experience: '',
     specialization: '',
@@ -103,30 +104,8 @@ const FacultyProfileForm = () => {
     }
   };
 
-  const handleDepartmentChange = (departmentValue, isChecked) => {
-    setFormData(prev => {
-      let newDepartments;
-      if (isChecked) {
-        newDepartments = [...prev.departments, departmentValue];
-      } else {
-        newDepartments = prev.departments.filter(dept => dept !== departmentValue);
-        // Remove subjects from unchecked department
-        const subjectsToRemove = SUBJECTS_BY_DEPARTMENT[departmentValue] || [];
-        const filteredSubjects = prev.subjects.filter(subject => 
-          !subjectsToRemove.includes(subject)
-        );
-        return {
-          ...prev,
-          departments: newDepartments,
-          subjects: filteredSubjects
-        };
-      }
-      return {
-        ...prev,
-        departments: newDepartments
-      };
-    });
-  };
+  // No longer needed as department is now a dropdown
+  // Subjects are shown regardless of department selection
 
   const handleSubjectChange = (subjectId, isChecked) => {
     setFormData(prev => {
@@ -148,16 +127,8 @@ const FacultyProfileForm = () => {
     }
   };
 
-  const getAvailableSubjects = () => {
-    return formData.departments.reduce((acc, dept) => {
-      const deptSubjects = SUBJECTS_BY_DEPARTMENT[dept] || [];
-      return [...acc, ...deptSubjects];
-    }, []);
-  };
-
   const getSubjectById = (subjectId) => {
-    const allSubjects = [...TECH_SUBJECTS, ...MANAGEMENT_SUBJECTS];
-    return allSubjects.find(s => s.id === subjectId);
+    return ALL_SUBJECTS.find(s => s.id === subjectId);
   };
 
   const validateForm = () => {
@@ -173,16 +144,16 @@ const FacultyProfileForm = () => {
       newErrors.employeeId = 'Employee ID must be at least 3 characters';
     }
 
+    if (!formData.department) {
+      newErrors.department = 'Please select a department';
+    }
+
     if (!formData.designation) {
       newErrors.designation = 'Please select your designation';
     }
 
     if (!formData.experience) {
       newErrors.experience = 'Please select your experience';
-    }
-
-    if (formData.departments.length === 0) {
-      newErrors.departments = 'Please select at least one department';
     }
 
     if (formData.subjects.length === 0) {
@@ -222,7 +193,7 @@ const FacultyProfileForm = () => {
       const profileData = {
         fullName: formData.fullName.trim(),
         employeeId: formData.employeeId.trim().toUpperCase(),
-        departments: formData.departments,
+        department: formData.department,
         designation: formData.designation,
         experience: formData.experience,
         specialization: formData.specialization.trim(),
@@ -256,8 +227,6 @@ const FacultyProfileForm = () => {
       setLoading(false);
     }
   };
-
-  const availableSubjects = getAvailableSubjects();
 
   return (
     <div className="min-h-screen bg-hero-pattern bg-cover bg-center bg-fixed flex items-center justify-center py-8">
@@ -378,8 +347,32 @@ const FacultyProfileForm = () => {
                 )}
               </div>
 
+              {/* Department/School */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Department/School <span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="department"
+                  value={formData.department}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
+                >
+                  <option value="">Select your department</option>
+                  {DEPARTMENTS.map(dept => (
+                    <option key={dept} value={dept}>
+                      {dept}
+                    </option>
+                  ))}
+                </select>
+                {errors.department && (
+                  <p className="mt-1 text-sm text-red-600">{errors.department}</p>
+                )}
+              </div>
+
               {/* Specialization (Optional) */}
-              <div className="md:col-span-2">
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Specialization <span className="text-gray-400">(Optional)</span>
                 </label>
@@ -389,59 +382,31 @@ const FacultyProfileForm = () => {
                   value={formData.specialization}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g., Machine Learning, Data Science, Cloud Computing, Digital Marketing"
+                  placeholder="e.g., Machine Learning, Data Science, Cloud Computing"
                 />
               </div>
             </div>
           </div>
 
-          {/* Departments Selection */}
-          <div>
+          {/* Teaching Subjects Selection - Show ALL subjects */}
+          <div className="bg-gray-50 rounded-lg p-4">
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              Department(s) <span className="text-red-500">*</span>
-              <span className="text-gray-500 text-xs ml-2">(Select multiple)</span>
+              <Code className="inline w-4 h-4 mr-1 text-gray-600" />
+              Teaching Subjects <span className="text-red-500">*</span>
+              <span className="text-gray-500 text-xs ml-2">(Select all subjects you can teach)</span>
             </label>
-            <div className="space-y-3">
-              {Object.keys(SUBJECTS_BY_DEPARTMENT).map(department => (
-                <div 
-                  key={department} 
-                  className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors"
-                >
-                  <input
-                    type="checkbox"
-                    id={`dept-${department}`}
-                    checked={formData.departments.includes(department)}
-                    onChange={(e) => handleDepartmentChange(department, e.target.checked)}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <label htmlFor={`dept-${department}`} className="ml-3 flex items-center cursor-pointer flex-1">
-                    <Building2 className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-900">{department}</span>
-                  </label>
-                </div>
-              ))}
-            </div>
-            {errors.departments && (
-              <p className="mt-1 text-sm text-red-600">{errors.departments}</p>
-            )}
-          </div>
-
-          {/* Teaching Subjects Selection */}
-          {availableSubjects.length > 0 && (
-            <div className="bg-gray-50 rounded-lg p-4">
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                <Code className="inline w-4 h-4 mr-1 text-gray-600" />
-                Teaching Subjects <span className="text-red-500">*</span>
-                <span className="text-gray-500 text-xs ml-2">(Select at least one)</span>
-              </label>
-              <p className="text-xs text-gray-600 mb-4">
-                Please select all the subjects you can teach:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-80 overflow-y-auto border border-gray-200 rounded-lg p-4 bg-white">
-                {availableSubjects.map(subject => (
+            
+            {/* Technology Subjects Section */}
+            <div className="mb-6">
+              <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
+                <Database className="w-4 h-4 mr-2 text-blue-600" />
+                Technology Subjects
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 border border-gray-200 rounded-lg p-3 bg-white">
+                {ALL_SUBJECTS.filter(s => s.department === 'School of Technology').map(subject => (
                   <div 
                     key={subject.id} 
-                    className="flex items-center p-3 bg-gray-50 hover:bg-blue-50 rounded-lg transition-all duration-200 border border-gray-200 hover:border-blue-300"
+                    className="flex items-center p-2 bg-gray-50 hover:bg-blue-50 rounded-lg transition-all duration-200 border border-gray-200 hover:border-blue-300"
                   >
                     <input
                       type="checkbox"
@@ -452,29 +417,51 @@ const FacultyProfileForm = () => {
                     />
                     <label 
                       htmlFor={`subject-${subject.id}`} 
-                      className="ml-3 flex items-center cursor-pointer flex-1"
+                      className="ml-2 flex items-center cursor-pointer flex-1"
                     >
-                      <span className="text-lg mr-2">{subject.icon}</span>
-                      <span className="text-sm font-medium text-gray-900">{subject.name}</span>
+                      <span className="text-lg mr-1">{subject.icon}</span>
+                      <span className="text-xs font-medium text-gray-900">{subject.name}</span>
                     </label>
                   </div>
                 ))}
               </div>
-              {formData.departments.includes('School of Technology') && (
-                <p className="text-xs text-gray-500 mt-2">
-                  💡 Technology subjects include programming languages, databases, and software development
-                </p>
-              )}
-              {formData.departments.includes('School of Management') && (
-                <p className="text-xs text-gray-500 mt-2">
-                  💡 Management subjects include business, communication, and analytical skills
-                </p>
-              )}
-              {errors.subjects && (
-                <p className="mt-2 text-sm text-red-600 font-medium">{errors.subjects}</p>
-              )}
             </div>
-          )}
+
+            {/* Management Subjects Section */}
+            <div>
+              <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
+                <Briefcase className="w-4 h-4 mr-2 text-green-600" />
+                Management Subjects
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 border border-gray-200 rounded-lg p-3 bg-white">
+                {ALL_SUBJECTS.filter(s => s.department === 'School of Management').map(subject => (
+                  <div 
+                    key={subject.id} 
+                    className="flex items-center p-2 bg-gray-50 hover:bg-green-50 rounded-lg transition-all duration-200 border border-gray-200 hover:border-green-300"
+                  >
+                    <input
+                      type="checkbox"
+                      id={`subject-${subject.id}`}
+                      checked={formData.subjects.includes(subject.id)}
+                      onChange={(e) => handleSubjectChange(subject.id, e.target.checked)}
+                      className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                    />
+                    <label 
+                      htmlFor={`subject-${subject.id}`} 
+                      className="ml-2 flex items-center cursor-pointer flex-1"
+                    >
+                      <span className="text-lg mr-1">{subject.icon}</span>
+                      <span className="text-xs font-medium text-gray-900">{subject.name}</span>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {errors.subjects && (
+              <p className="mt-3 text-sm text-red-600 font-medium">{errors.subjects}</p>
+            )}
+          </div>
 
           {/* Contact Information */}
           <div className="bg-gray-50 rounded-lg p-4">
@@ -492,7 +479,7 @@ const FacultyProfileForm = () => {
           </div>
 
           {/* Selected Summary */}
-          {(formData.departments.length > 0 || formData.subjects.length > 0) && (
+          {(formData.department || formData.subjects.length > 0) && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h4 className="font-medium text-blue-900 mb-3 flex items-center">
                 <Check className="w-5 h-5 mr-2" />
@@ -504,14 +491,24 @@ const FacultyProfileForm = () => {
                     <strong>Employee ID:</strong> {formData.employeeId.toUpperCase()}
                   </p>
                 )}
+                {formData.department && (
+                  <p className="text-blue-800">
+                    <strong>Department:</strong> {formData.department}
+                  </p>
+                )}
                 {formData.designation && (
                   <p className="text-blue-800">
                     <strong>Designation:</strong> {formData.designation}
                   </p>
                 )}
-                {formData.departments.length > 0 && (
+                {formData.experience && (
                   <p className="text-blue-800">
-                    <strong>Departments:</strong> {formData.departments.join(', ')}
+                    <strong>Experience:</strong> {formData.experience}
+                  </p>
+                )}
+                {formData.specialization && (
+                  <p className="text-blue-800">
+                    <strong>Specialization:</strong> {formData.specialization}
                   </p>
                 )}
                 {formData.subjects.length > 0 && (
