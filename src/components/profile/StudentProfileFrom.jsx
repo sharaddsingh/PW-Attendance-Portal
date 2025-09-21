@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Phone, School, Users, Upload, Check } from 'lucide-react';
+import { User, Phone, School, Users, Upload, Check, ArrowLeft } from 'lucide-react';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import { useAuth } from '../../contexts/AuthContext';
@@ -63,6 +63,15 @@ const StudentProfileForm = () => {
     if (errors.profilePhoto) setErrors(prev => ({ ...prev, profilePhoto: '' }));
   };
 
+  const handleBackToLogin = () => {
+    // Sign out the user and redirect to login
+    if (window.confirm('Are you sure you want to go back? You will be signed out.')) {
+      localStorage.clear();
+      sessionStorage.clear();
+      navigate('/login');
+    }
+  };
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
@@ -120,7 +129,16 @@ const StudentProfileForm = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center py-8">
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-2xl mx-4">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-2xl mx-4 relative">
+        {/* Back Button */}
+        <button
+          onClick={handleBackToLogin}
+          className="absolute top-6 left-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors group"
+        >
+          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+          <span className="text-sm font-medium">Back to Login</span>
+        </button>
+        
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-105">
             <User className="w-10 h-10 text-blue-600" />
@@ -204,10 +222,31 @@ const StudentProfileForm = () => {
           {/* Submit Error */}
           {errors.submit && <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">{errors.submit}</div>}
 
-          {/* Submit Button */}
-          <Button type="submit" disabled={loading} loading={loading} variant="success" size="lg" className="w-full" icon={<Check className="w-5 h-5" />}>
-            Complete Profile
-          </Button>
+          {/* Submit and Cancel Buttons */}
+          <div className="flex gap-4">
+            <Button
+              type="button"
+              onClick={handleBackToLogin}
+              disabled={loading}
+              variant="secondary"
+              size="lg"
+              className="flex-1"
+              icon={<ArrowLeft className="w-5 h-5" />}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={loading}
+              loading={loading}
+              variant="primary"
+              size="lg"
+              className="flex-1"
+              icon={<Check className="w-5 h-5" />}
+            >
+              Complete Profile
+            </Button>
+          </div>
 
           <p className="text-center text-sm text-gray-500">Profile completion is mandatory to access dashboard features</p>
         </form>
