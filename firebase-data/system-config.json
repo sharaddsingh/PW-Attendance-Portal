@@ -1,0 +1,33 @@
+{
+  "system_config": {
+    "configId": "config",
+    "qrExpiryTime": 300,
+    "qrRotationInterval": 30,
+    "allowOfflineQR": true,
+    "lateMarkThreshold": 15,
+    "minAttendancePercentage": 75,
+    "allowManualMarking": true,
+    "maxLeaveDays": 30,
+    "requireAttachment": false,
+    "defaultSessionDuration": 60,
+    "maxActiveSessionsPerFaculty": 3,
+    "requirePhotoVerification": true,
+    "requireLocationVerification": false,
+    "maxDevicesPerStudent": 2,
+    "currentSemester": 1,
+    "semesterStartDate": "2024-08-01",
+    "semesterEndDate": "2024-12-31",
+    "holidays": [
+      "2024-08-15",
+      "2024-09-02",
+      "2024-10-02",
+      "2024-10-31",
+      "2024-11-01",
+      "2024-11-12",
+      "2024-12-25"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2024-01-01T00:00:00Z",
+    "updatedBy": "admin"
+  }
+}

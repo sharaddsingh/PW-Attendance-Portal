@@ -1,0 +1,242 @@
+{
+  "schools": [
+    {
+      "id": "sot",
+      "name": "School of Technology",
+      "shortName": "SOT",
+      "description": "Technology and Computer Science Programs",
+      "departments": ["BCA", "MCA", "B.Tech", "M.Tech"],
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "som",
+      "name": "School of Management",
+      "shortName": "SOM",
+      "description": "Business and Management Programs",
+      "departments": ["BBA", "MBA", "PGDM"],
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "batches": [
+    {
+      "id": "bca-2024-27",
+      "name": "BCA 2024-27",
+      "schoolId": "sot",
+      "program": "BCA",
+      "startYear": 2024,
+      "endYear": 2027,
+      "currentSemester": 1,
+      "totalStudents": 60,
+      "isActive": true,
+      "createdAt": "2024-07-01T00:00:00Z"
+    },
+    {
+      "id": "bca-2023-26",
+      "name": "BCA 2023-26",
+      "schoolId": "sot",
+      "program": "BCA",
+      "startYear": 2023,
+      "endYear": 2026,
+      "currentSemester": 3,
+      "totalStudents": 55,
+      "isActive": true,
+      "createdAt": "2023-07-01T00:00:00Z"
+    },
+    {
+      "id": "bca-2022-25",
+      "name": "BCA 2022-25",
+      "schoolId": "sot",
+      "program": "BCA",
+      "startYear": 2022,
+      "endYear": 2025,
+      "currentSemester": 5,
+      "totalStudents": 50,
+      "isActive": true,
+      "createdAt": "2022-07-01T00:00:00Z"
+    },
+    {
+      "id": "mca-2024-26",
+      "name": "MCA 2024-26",
+      "schoolId": "sot",
+      "program": "MCA",
+      "startYear": 2024,
+      "endYear": 2026,
+      "currentSemester": 1,
+      "totalStudents": 40,
+      "isActive": true,
+      "createdAt": "2024-07-01T00:00:00Z"
+    },
+    {
+      "id": "btech-2024-28",
+      "name": "B.Tech 2024-28",
+      "schoolId": "sot",
+      "program": "B.Tech",
+      "startYear": 2024,
+      "endYear": 2028,
+      "currentSemester": 1,
+      "totalStudents": 120,
+      "isActive": true,
+      "createdAt": "2024-07-01T00:00:00Z"
+    },
+    {
+      "id": "bba-2024-27",
+      "name": "BBA 2024-27",
+      "schoolId": "som",
+      "program": "BBA",
+      "startYear": 2024,
+      "endYear": 2027,
+      "currentSemester": 1,
+      "totalStudents": 80,
+      "isActive": true,
+      "createdAt": "2024-07-01T00:00:00Z"
+    },
+    {
+      "id": "mba-2024-26",
+      "name": "MBA 2024-26",
+      "schoolId": "som",
+      "program": "MBA",
+      "startYear": 2024,
+      "endYear": 2026,
+      "currentSemester": 1,
+      "totalStudents": 60,
+      "isActive": true,
+      "createdAt": "2024-07-01T00:00:00Z"
+    }
+  ],
+  "subjects": [
+    {
+      "id": "java-programming",
+      "name": "JAVA Programming",
+      "code": "CS101",
+      "schoolId": "sot",
+      "credits": 4,
+      "type": "theory",
+      "semester": 3,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "python-programming",
+      "name": "PYTHON Programming",
+      "code": "CS102",
+      "schoolId": "sot",
+      "credits": 4,
+      "type": "theory",
+      "semester": 2,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "javascript",
+      "name": "JAVASCRIPT",
+      "code": "CS103",
+      "schoolId": "sot",
+      "credits": 3,
+      "type": "practical",
+      "semester": 4,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "dsa",
+      "name": "Data Structures & Algorithms",
+      "code": "CS201",
+      "schoolId": "sot",
+      "credits": 5,
+      "type": "theory",
+      "semester": 3,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "dbms",
+      "name": "Database Management System",
+      "code": "CS202",
+      "schoolId": "sot",
+      "credits": 4,
+      "type": "theory",
+      "semester": 4,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "web-development",
+      "name": "Web Development",
+      "code": "CS301",
+      "schoolId": "sot",
+      "credits": 4,
+      "type": "practical",
+      "semester": 5,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "machine-learning",
+      "name": "Machine Learning",
+      "code": "CS401",
+      "schoolId": "sot",
+      "credits": 4,
+      "type": "theory",
+      "semester": 6,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "business-communication",
+      "name": "Business Communication",
+      "code": "MG101",
+      "schoolId": "som",
+      "credits": 3,
+      "type": "theory",
+      "semester": 1,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "critical-communication",
+      "name": "Critical Communication",
+      "code": "MG102",
+      "schoolId": "som",
+      "credits": 3,
+      "type": "theory",
+      "semester": 2,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "excel",
+      "name": "Advanced Excel",
+      "code": "MG201",
+      "schoolId": "som",
+      "credits": 2,
+      "type": "practical",
+      "semester": 1,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "marketing-management",
+      "name": "Marketing Management",
+      "code": "MG301",
+      "schoolId": "som",
+      "credits": 4,
+      "type": "theory",
+      "semester": 3,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "financial-management",
+      "name": "Financial Management",
+      "code": "MG302",
+      "schoolId": "som",
+      "credits": 4,
+      "type": "theory",
+      "semester": 3,
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    }
+  ]
+}
