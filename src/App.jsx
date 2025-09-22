@@ -17,6 +17,7 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { NotificationProvider, NotificationContainer } from "./contexts/NotificationContext";
 import LoginPage from "./pages/LoginPage";
 import FacultyDashboard from "./components/faculty/FacultyDashboard";
 import StudentDashboard from "./components/student/StudentDashboard";
@@ -129,9 +130,12 @@ function AppRoutes() {
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <NotificationProvider>
+        <BrowserRouter>
+          <NotificationContainer />
+          <AppRoutes />
+        </BrowserRouter>
+      </NotificationProvider>
     </AuthProvider>
   );
 }
