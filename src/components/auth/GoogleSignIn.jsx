@@ -1,6 +1,5 @@
 import { useAuth } from "../../contexts/AuthContext";
 import { FcGoogle } from "react-icons/fc"; // Google icon from react-icons
-
 export default function GoogleSignIn() {
   const { loginWithGoogle } = useAuth();
 

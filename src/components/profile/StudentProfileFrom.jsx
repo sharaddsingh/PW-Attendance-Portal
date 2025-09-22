@@ -8,14 +8,13 @@ import { createProfileDocument, uploadFile, generateDeviceId } from '../../servi
 
 const BATCH_OPTIONS = {
   'School of Technology': [
-    'BCA 2022-25', 'BCA 2023-26', 'BCA 2024-27',
-    'MCA 2023-25', 'MCA 2024-26', 
-    'B.Tech 2022-26', 'B.Tech 2023-27', 'B.Tech 2024-28'
+    'SOT24B1',
+    'SOT24B2',
+    'SOT23B1'
   ],
   'School of Management': [
-    'BBA 2022-25', 'BBA 2023-26', 'BBA 2024-27',
-    'MBA 2023-25', 'MBA 2024-26',
-    'PGDM 2023-25', 'PGDM 2024-26'
+    'SOM23B1',
+    'SOM24B1'
   ]
 };
 
@@ -128,8 +127,8 @@ const StudentProfileForm = () => {
   const availableBatches = formData.school ? BATCH_OPTIONS[formData.school] : [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center py-8">
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-2xl mx-4 relative">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center py-4 px-4">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-2xl relative">
         {/* Back Button */}
         <button
           onClick={handleBackToLogin}
@@ -139,17 +138,17 @@ const StudentProfileForm = () => {
           <span className="text-sm font-medium">Back to Login</span>
         </button>
         
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-105">
-            <User className="w-10 h-10 text-blue-600" />
+        <div className="text-center mb-6">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-105">
+            <User className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Complete Your Profile</h2>
-          <p className="text-gray-600">Fill your details to access the student dashboard</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Complete Your Profile</h2>
+          <p className="text-sm sm:text-base text-gray-600">Fill your details to access the student dashboard</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           {/* Photo */}
-          <div className="flex flex-col items-center space-y-4">
+          <div className="flex flex-col items-center space-y-3">
             <div className="relative">
               <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 border-4 border-white shadow-lg transition-transform hover:scale-105">
                 {photoPreview ? (
@@ -169,7 +168,7 @@ const StudentProfileForm = () => {
           </div>
 
           {/* Form Inputs */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <Input label="Full Name" name="fullName" value={formData.fullName} onChange={handleInputChange} error={errors.fullName} required placeholder="Enter your full name" />
             <Input label="Registration Number" name="regNumber" value={formData.regNumber} onChange={handleInputChange} error={errors.regNumber} required placeholder="Enter your registration number" />
 

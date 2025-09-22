@@ -38,8 +38,8 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+        <div className="max-w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
               <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
@@ -101,11 +101,11 @@ const StudentDashboard = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
           {/* Desktop Sidebar */}
           <div className="hidden sm:block w-64 flex-shrink-0">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
               <nav className="space-y-2">
                 {menuItems.map((item) => {
                   const Icon = item.icon;
@@ -129,24 +129,24 @@ const StudentDashboard = () => {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 space-y-8">
+          <div className="flex-1 space-y-6">
             {activeSection === 'dashboard' && (
               <>
                 {/* QR Scanner Section */}
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Quick Actions</h2>
                   <QRScanner />
                 </div>
 
                 {/* Today's Attendance */}
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Today's Classes</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Today's Classes</h2>
                   <TodayAttendance />
                 </div>
 
                 {/* Attendance Overview */}
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Attendance Overview</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Attendance Overview</h2>
                   <AttendanceChart />
                 </div>
               </>
@@ -154,21 +154,21 @@ const StudentDashboard = () => {
 
             {activeSection === 'attendance' && (
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Today's Classes</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Today's Classes</h2>
                 <TodayAttendance detailed={true} />
               </div>
             )}
 
             {activeSection === 'reports' && (
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Attendance Reports</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Attendance Reports</h2>
                 <AttendanceChart detailed={true} />
               </div>
             )}
 
             {activeSection === 'leave' && (
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Leave Application</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Leave Application</h2>
                 <LeaveApplication />
               </div>
             )}

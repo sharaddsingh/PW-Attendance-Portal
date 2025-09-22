@@ -50,34 +50,13 @@ const ALL_SUBJECTS = [
   { id: 'project-mgmt', name: 'Project Management', icon: '📋', department: 'School of Management' }
 ];
 
-// Designation options
-const DESIGNATIONS = [
-  'Professor',
-  'Associate Professor',
-  'Assistant Professor',
-  'Lecturer',
-  'Teaching Assistant',
-  'Visiting Faculty',
-  'Guest Lecturer'
-];
-
-// Experience options
-const EXPERIENCE_OPTIONS = [
-  '0-1 years',
-  '1-3 years',
-  '3-5 years',
-  '5-10 years',
-  '10-15 years',
-  '15+ years'
-];
+// Removed designation and experience options as they are no longer needed
 
 const FacultyProfileForm = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     employeeId: '',
     department: '',
-    designation: '',
-    experience: '',
     specialization: '',
     subjects: [],
     phone: ''
@@ -148,14 +127,6 @@ const FacultyProfileForm = () => {
       newErrors.department = 'Please select a department';
     }
 
-    if (!formData.designation) {
-      newErrors.designation = 'Please select your designation';
-    }
-
-    if (!formData.experience) {
-      newErrors.experience = 'Please select your experience';
-    }
-
     if (formData.subjects.length === 0) {
       newErrors.subjects = 'Please select at least one subject';
     }
@@ -194,8 +165,6 @@ const FacultyProfileForm = () => {
         fullName: formData.fullName.trim(),
         employeeId: formData.employeeId.trim().toUpperCase(),
         department: formData.department,
-        designation: formData.designation,
-        experience: formData.experience,
         specialization: formData.specialization.trim(),
         subjects: formData.subjects,
         phone: formData.phone.trim(),
@@ -229,8 +198,8 @@ const FacultyProfileForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-hero-pattern bg-cover bg-center bg-fixed flex items-center justify-center py-8">
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-3xl mx-4 relative">
+    <div className="min-h-screen bg-hero-pattern bg-cover bg-center bg-fixed flex items-center justify-center py-4 px-4">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-3xl relative">
         {/* Back Button */}
         <button
           onClick={handleBackToLogin}
@@ -240,26 +209,26 @@ const FacultyProfileForm = () => {
           <span className="text-sm font-medium">Back to Login</span>
         </button>
         
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <UserCheck className="w-10 h-10 text-green-600" />
+        <div className="text-center mb-6">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <UserCheck className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
             Complete Your Faculty Profile
           </h2>
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600">
             Please fill in your details to access the faculty dashboard
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           {/* Personal Information */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div className="bg-gray-50 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4 flex items-center">
               <UserCheck className="w-5 h-5 mr-2 text-gray-600" />
               Personal Information
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {/* Full Name */}
               <Input
                 label="Full Name"
@@ -293,60 +262,12 @@ const FacultyProfileForm = () => {
           </div>
 
           {/* Professional Information */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div className="bg-gray-50 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4 flex items-center">
               <Briefcase className="w-5 h-5 mr-2 text-gray-600" />
               Professional Information
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Designation */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Designation <span className="text-red-500">*</span>
-                </label>
-                <select
-                  name="designation"
-                  value={formData.designation}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                >
-                  <option value="">Select your designation</option>
-                  {DESIGNATIONS.map(designation => (
-                    <option key={designation} value={designation}>
-                      {designation}
-                    </option>
-                  ))}
-                </select>
-                {errors.designation && (
-                  <p className="mt-1 text-sm text-red-600">{errors.designation}</p>
-                )}
-              </div>
-
-              {/* Experience */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Experience <span className="text-red-500">*</span>
-                </label>
-                <select
-                  name="experience"
-                  value={formData.experience}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                >
-                  <option value="">Select your experience</option>
-                  {EXPERIENCE_OPTIONS.map(exp => (
-                    <option key={exp} value={exp}>
-                      {exp}
-                    </option>
-                  ))}
-                </select>
-                {errors.experience && (
-                  <p className="mt-1 text-sm text-red-600">{errors.experience}</p>
-                )}
-              </div>
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {/* Department/School */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -389,7 +310,7 @@ const FacultyProfileForm = () => {
           </div>
 
           {/* Teaching Subjects Selection - Show ALL subjects */}
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
             <label className="block text-sm font-medium text-gray-700 mb-3">
               <Code className="inline w-4 h-4 mr-1 text-gray-600" />
               Teaching Subjects <span className="text-red-500">*</span>
@@ -494,16 +415,6 @@ const FacultyProfileForm = () => {
                 {formData.department && (
                   <p className="text-blue-800">
                     <strong>Department:</strong> {formData.department}
-                  </p>
-                )}
-                {formData.designation && (
-                  <p className="text-blue-800">
-                    <strong>Designation:</strong> {formData.designation}
-                  </p>
-                )}
-                {formData.experience && (
-                  <p className="text-blue-800">
-                    <strong>Experience:</strong> {formData.experience}
                   </p>
                 )}
                 {formData.specialization && (

@@ -49,7 +49,10 @@ const LoginForm = () => {
           userRole === "student" ? "/student-dashboard" : "/faculty-dashboard"
         );
       } else {
-        navigate("/complete-profile");
+        // Navigate to role-specific profile form based on email domain
+        const email = user.email || '';
+        const isStudent = email.includes('@pwioi.com');
+        navigate(isStudent ? "/student-profile" : "/faculty-profile");
       }
     }
   }, [isAuthenticated, isProfileComplete, user, navigate]);
@@ -89,10 +92,11 @@ const LoginForm = () => {
       }
 
       // Navigate based on role and profile completion
+      // Direct to role-specific profile forms
       if (role === "student") {
-        navigate("/complete-profile");
+        navigate("/student-profile");
       } else {
-        navigate("/faculty-dashboard");
+        navigate("/faculty-profile");
       }
     } catch (error) {
       console.error("Sign-in processing error:", error);
@@ -136,26 +140,26 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-fixed">
-      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl w-full max-w-md mx-4">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">
+    <div className="min-h-screen flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-fixed px-4 py-8">
+      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl w-full max-w-md">
+        <div className="text-center mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
             Login to Attendance System
           </h2>
-          <p className="text-white/80 text-sm">
+          <p className="text-white/80 text-xs sm:text-sm">
             Please select your role and sign in with Google
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Role Selection */}
           <div>
-            <select
-              value={selectedRole}
-              onChange={handleRoleChange}
-              className="w-full px-4 py-3 bg-black text-white rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
+              <select
+                value={selectedRole}
+                onChange={handleRoleChange}
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-black text-white rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+                required
+              >
               <option value="" disabled>
                 Select Role
               </option>

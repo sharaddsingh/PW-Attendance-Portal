@@ -21,6 +21,8 @@ import LoginPage from "./pages/LoginPage";
 import FacultyDashboard from "./components/faculty/FacultyDashboard";
 import StudentDashboard from "./components/student/StudentDashboard";
 import CompleteProfile from "./pages/CompleteProfile";
+import FacultyProfileForm from "./components/profile/FacultyProfileForm";
+import StudentProfileForm from "./components/profile/StudentProfileFrom";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import QRRotationDebugger from "./components/debug/QRRotationDebugger";
 
@@ -55,8 +57,18 @@ function AppRoutes() {
 
   // If user is authenticated but doesn't have a complete profile, show profile completion
   // This ensures all users have proper profile data before accessing the main application
+  // Route to specific form based on user's role (determined by email domain)
   if (user && !userProfile?.profileComplete) {
-    return <CompleteProfile />;
+    // Determine role based on email domain
+    const email = user.email || '';
+    const isStudent = email.includes('@pwioi.com');
+    
+    // Return the appropriate profile form based on role
+    if (isStudent) {
+      return <StudentProfileForm />;
+    } else {
+      return <FacultyProfileForm />;
+    }
   }
 
   // Main application routes - user is authenticated and has complete profile
@@ -67,8 +79,14 @@ function AppRoutes() {
         userProfile?.role === 'faculty' ? <FacultyDashboard /> : <StudentDashboard />
       } />
       
-      {/* Profile completion route - accessible after authentication */}
-      <Route path="/complete-profile" element={<CompleteProfile />} />
+      {/* Profile completion routes - accessible after authentication */}
+      <Route path="/complete-profile" element={
+        userProfile?.role === 'student' ? <StudentProfileForm /> : 
+        userProfile?.role === 'faculty' ? <FacultyProfileForm /> : 
+        <CompleteProfile />
+      } />
+      <Route path="/faculty-profile" element={<FacultyProfileForm />} />
+      <Route path="/student-profile" element={<StudentProfileForm />} />
       
       {/* Protected faculty dashboard - only accessible by faculty members */}
       <Route
