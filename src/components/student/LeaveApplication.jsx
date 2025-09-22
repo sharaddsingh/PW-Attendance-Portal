@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { FileText, Upload, Send, CheckCircle, Clock, XCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { FileText, Upload, Send, CheckCircle, Clock, XCircle, AlertCircle } from 'lucide-react';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNotify } from '../../contexts/NotificationContext';
+import { addDoc, collection, query, where, orderBy, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { db, uploadFile } from '../../services/firebase';
 
 const SUBJECTS = [
   'JAVA',
@@ -24,26 +27,45 @@ const LeaveApplication = () => {
     attachment: null
   });
   const [loading, setLoading] = useState(false);
-  const [recentApplications] = useState([
-    {
-      id: 1,
-      date: '2024-01-15',
-      subject: 'JAVA',
-      periods: 2,
-      status: 'pending',
-      reason: 'Medical emergency'
-    },
-    {
-      id: 2,
-      date: '2024-01-10',
-      subject: 'DSA',
-      periods: 1,
-      status: 'approved',
-      reason: 'Family function'
-    }
-  ]);
+  const [fetchingApplications, setFetchingApplications] = useState(true);
+  const [recentApplications, setRecentApplications] = useState([]);
+  const [attachmentPreview, setAttachmentPreview] = useState(null);
 
-  const { userProfile } = useAuth();
+  const { user, userProfile } = useAuth();
+  const notify = useNotify();
+
+  // Fetch recent leave applications
+  useEffect(() => {
+    fetchRecentApplications();
+  }, [user]);
+
+  const fetchRecentApplications = async () => {
+    if (!user) return;
+    
+    try {
+      setFetchingApplications(true);
+      const applicationsRef = collection(db, 'leave_applications');
+      const q = query(
+        applicationsRef,
+        where('studentId', '==', user.uid),
+        orderBy('createdAt', 'desc')
+      );
+      
+      const snapshot = await getDocs(q);
+      const applications = [];
+      
+      snapshot.forEach((doc) => {
+        applications.push({ id: doc.id, ...doc.data() });
+      });
+      
+      setRecentApplications(applications.slice(0, 5)); // Show only 5 recent applications
+    } catch (error) {
+      console.error('Error fetching leave applications:', error);
+      notify.error('Failed to fetch recent applications');
+    } finally {
+      setFetchingApplications(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -55,19 +77,84 @@ const LeaveApplication = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData(prev => ({
-      ...prev,
-      attachment: file
-    }));
+    if (file) {
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        notify.error('File size must be less than 5MB');
+        return;
+      }
+      
+      // Check file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+      if (!allowedTypes.includes(file.type)) {
+        notify.error('Only JPEG, PNG, and PDF files are allowed');
+        return;
+      }
+      
+      setFormData(prev => ({
+        ...prev,
+        attachment: file
+      }));
+      
+      // Create preview for images
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => setAttachmentPreview(e.target.result);
+        reader.readAsDataURL(file);
+      } else {
+        setAttachmentPreview(null);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validation
+    if (!formData.date || !formData.periods || !formData.subject || !formData.reason) {
+      notify.error('Please fill all required fields');
+      return;
+    }
+    
     setLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      let attachmentUrl = null;
+      
+      // Upload attachment if provided
+      if (formData.attachment) {
+        const attachmentPath = `leave_attachments/${user.uid}/${Date.now()}_${formData.attachment.name}`;
+        const uploadResult = await uploadFile(formData.attachment, attachmentPath);
+        
+        if (uploadResult.success) {
+          attachmentUrl = uploadResult.url;
+        } else {
+          throw new Error('Failed to upload attachment');
+        }
+      }
+      
+      // Create leave application document
+      const applicationData = {
+        studentId: user.uid,
+        studentName: userProfile.fullName,
+        studentEmail: user.email,
+        regNumber: userProfile.regNumber,
+        batch: userProfile.batch,
+        school: userProfile.school,
+        date: formData.date,
+        periods: parseInt(formData.periods),
+        subject: formData.subject,
+        reason: formData.reason,
+        attachmentUrl: attachmentUrl,
+        status: 'pending',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        facultyRemarks: null,
+        reviewedBy: null,
+        reviewedAt: null
+      };
+      
+      await addDoc(collection(db, 'leave_applications'), applicationData);
       
       // Reset form
       setFormData({
@@ -77,11 +164,16 @@ const LeaveApplication = () => {
         reason: '',
         attachment: null
       });
-
-      alert('Leave application submitted successfully!');
+      setAttachmentPreview(null);
+      
+      notify.success('Leave application submitted successfully!');
+      
+      // Refresh recent applications
+      await fetchRecentApplications();
+      
     } catch (error) {
       console.error('Error submitting leave application:', error);
-      alert('Failed to submit leave application. Please try again.');
+      notify.error('Failed to submit leave application. Please try again.');
     } finally {
       setLoading(false);
     }
